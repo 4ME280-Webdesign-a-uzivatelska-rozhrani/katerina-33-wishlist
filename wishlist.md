@@ -1,7 +1,7 @@
 # Wishlist
 
 1. **PlayStation 5 Pro**
-   - [Odkaz na produkt]([https://example.com/smartphone](https://www.alza.cz/gaming/playstation-5-pro?dq=12543328&o=1))
+   - [Odkaz na produkt](https://www.alza.cz/gaming/playstation-5-pro?dq=12543328&o=1)
    - ![Obrázek](https://image.alza.cz/products/MSX0053/MSX0053.jpg?width=1000&height=1000)
    - Cena: 19,960 Kč
 
