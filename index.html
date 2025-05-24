@@ -1,22 +1,66 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Můj Wishlist</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Můj Wishlist</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9f9f9;
+      padding: 2rem;
+      max-width: 800px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      margin: 0.5rem 0;
+    }
+    a {
+      color: #007acc;
+      text-decoration: none;
+       a:hover {
+      text-decoration: underline;
+    }
+    .wishlist-item {
+      background: #fff;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+  </style>
 </head>
 <body>
-    <h1>Můj narozeninový wishlist</h1>
-    <div id="content" style="white-space: pre-wrap; font-family: sans-serif;"></div>
+  <h1>Můj narozeninový wishlist</h1>
+  <div id="content"></div>
 
-    <script>
-        async function fetchMarkdown() {
-            const response = await fetch('https://raw.githubusercontent.com/4ME280-Webdesign-a-uzivatelska-rozhrani/katerina-33-wishlist/main/wishlist.md');
-            const text = await response.text();
-            document.getElementById('content').innerText = text;
-        }
-        fetchMarkdown();
-    </script>
+  <script>
+    async function loadWishlist() {
+      const url = 'https://raw.githubusercontent.com/4ME280-Webdesign-a-uzivatelska-rozhrani/katerina-3-wishlist/main/wishlist.md';
+      try {
+        const response = await fetch(url);
+        const markdown = await response.text();
+        const html = marked.parse(markdown);
+        document.getElementById('content').innerHTML = html;
+
+        // Přidej třídu pro stylování každé položky
+        document.querySelectorAll('#content > ol > li').forEach(li => {
+          li.classList.add('wishlist-item');
+        });
+      } catch (error) {
+        document.getElementById('content').innerText = 'Nepodařilo se načíst wishlist.';
+        console.error(error);
+      }
+    }
+
+    loadWishlist();
+  </script>
 </body>
 </html>
-
