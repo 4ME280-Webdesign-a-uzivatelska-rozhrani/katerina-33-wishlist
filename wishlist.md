@@ -49,4 +49,4 @@
    - [Odkaz na produkt](https://www.freshlabels.cz/produkty/gramicci-snail-hooded-sweatshirt-gra212/?pohlavi=damy)
    - ![Obrázek](https://res.cloudinary.com/freshlabels-s-r-o/image/upload/c_limit,f_auto,h_890,q_70,w_700/v1/eshop/prod/product/627782-015-bara-627782.jpg)
    - Cena: 2,890 Kč
-
+     
