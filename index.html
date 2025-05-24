@@ -1,1 +1,22 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Můj Wishlist</title>
+</head>
+<body>
+    <h1>Můj narozeninový wishlist</h1>
+    <div id="content" style="white-space: pre-wrap; font-family: sans-serif;"></div>
+
+    <script>
+        async function fetchMarkdown() {
+            const response = await fetch('https://raw.githubusercontent.com/4ME280-Webdesign-a-uzivatelska-rozhrani/katerina-33-wishlist/main/wishlist.md');
+            const text = await response.text();
+            document.getElementById('content').innerText = text;
+        }
+        fetchMarkdown();
+    </script>
+</body>
+</html>
 
