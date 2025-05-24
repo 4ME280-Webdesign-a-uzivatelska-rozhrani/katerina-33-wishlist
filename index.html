@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <title>Seznam dárků</title>
+  <style>
+    body { font-family: Arial, sans-serif; }
+    .gift { border: 1px solid #ccc; padding: 10px; margin: 10px; display: flex; align-items: center; }
+    .gift img { width: 100px; height: auto; margin-right: 15px; }
+    .gift-info { flex: 1; }
+    .reserved { color: green; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>🎁 Seznam dárků</h1>
+  <div id="gift-list">Načítání...</div>
+
+  <script>
+    const binId = "6831a3e58960c979a5a07e6b";
+    const apiKey = "$2a$10$OjbX3qOikmJ87BEbhHwnbOyJi4zmeNCrON8D8ED.bxfghxs3oswFu"; // nahraďte svým klíčem
+    const apiUrl = `https://api.jsonbin.io/v3/b/${binId}`;
+
+    async function fetchGifts() {
+      const res = await fetch(apiUrl, {
+        headers: { "X-Master-Key": apiKey }
+      });
+      const data = await res.json();
+      return data.record;
+    }
+
+    async function updateGift(index, name) {
+      const res = await fetch(apiUrl, {
+        headers: { "X-Master-Key": apiKey }
+      });
+      const data = await res.json();
+      const gifts = data.record;
+      gifts[index].zamluveno = name;
+
+      await fetch(apiUrl, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Master-Key": apiKey
+        },
+        body: JSON.stringify(gifts)
+      });
+
+      renderGifts();
+    }
+
+    async function renderGifts() {
+      const gifts = await fetchGifts();
+      const container = document.getElementById("gift-list");
+      container.innerHTML = "";
+
+      gifts.forEach((gift, index) => {
+        const div = document.createElement("div");
+        div.className = "gift";
+        div.innerHTML = `
+          <img src="${gift.image}" alt="${gift.name}">
+          <div class="gift-info">
+            <h3><a href="${gift.product_link}" target="_blank">${gift.name}</a></h3>
+            <p>Cena: ${gift.price}</p>
+            <p>${gift.zamluveno ? `<span class="reserved">Zamluveno: ${gift.zamluveno}</span>` : `
+              <input type="text" id="name-${index}" placeholder="Vaše jméno">
+              <button onclick="reserveGift(${index})">Zamluvit</button>`}
+            </p>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    async function reserveGift(index) {
+      const name = document.getElementById(`name-${index}`).value.trim();
+      if (name) {
+        await updateGift(index, name);
+      }
+    }
+
+    renderGifts();
+  </script>
+</body>
+</html>
